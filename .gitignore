@@ -1,1 +1,8 @@
 .env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+reports/runs/

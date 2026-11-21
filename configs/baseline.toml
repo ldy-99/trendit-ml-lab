@@ -1,0 +1,27 @@
+# All dates use the original dataset's naive KST clock.
+seed = 42
+validation_start = "2024-01-01 00:00:00"
+test_start = "2025-01-01 00:00:00"
+# 48h target plus one 6h collection interval; same rule for both labels.
+label_horizon_hours = 48
+observation_buffer_hours = 6
+threshold = 0.5
+# Choose by validation balanced accuracy; ties keep the simpler earlier model.
+selection_metric = "balanced_accuracy"
+numeric_features = [
+  "entry_rank_log", "T0_view_log", "T0_comment_log",
+  "T0_engagement_ratio_log", "latency_to_trend_log",
+  "pretrend_view_velocity_log", "published_weekday",
+  "hour_sin", "hour_cos", "saturation_index_30d_mean_prev",
+]
+categorical_features = ["category_group"]
+
+[logistic]
+C = 1.0
+max_iter = 2000
+
+[forest]
+n_estimators = 200
+max_depth = 10
+min_samples_leaf = 20
+n_jobs = 1

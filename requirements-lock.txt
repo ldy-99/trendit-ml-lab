@@ -1,0 +1,17 @@
+# Tested with CPython 3.13.12 on Windows; includes transitive dependencies.
+cloudpickle==3.1.3
+colorama==0.4.6
+iniconfig==2.3.1
+joblib==1.6.0
+numpy==2.2.6
+packaging==26.3
+pandas==2.2.3
+pluggy==1.7.0
+pyarrow==19.0.1
+pytest==8.3.5
+python-dateutil==4.0.0
+pytz==2026.6
+scikit-learn==1.6.1
+scipy==1.14.1
+threadpoolctl==3.8.0
+tzdata==2026.6

@@ -1,0 +1,84 @@
+{
+  "created_at_utc": "2026-11-21T10:49:32.016133+00:00",
+  "python": "3.13.12",
+  "platform": "Windows-11-10.0.22631-SP0",
+  "git": {
+    "commit": "5ed1fe01edb8e5598a4875bb43e2a704702d9074",
+    "status": "M .gitignore\n?? .python-version\n?? configs/baseline.toml\n?? experiments/run_baseline.py\n?? pyproject.toml\n?? requirements-lock.txt\n?? requirements.txt\n?? src/trendit_lab/\n?? tests/test_data.py\n?? tests/test_model.py\n?? tests/test_split.py"
+  },
+  "packages": {
+    "cloudpickle": "3.1.3",
+    "colorama": "0.4.6",
+    "iniconfig": "2.3.1",
+    "joblib": "1.6.0",
+    "numpy": "2.2.6",
+    "packaging": "26.3",
+    "pandas": "2.2.3",
+    "pip": "25.3",
+    "pluggy": "1.7.0",
+    "pyarrow": "19.0.1",
+    "pytest": "8.3.5",
+    "python-dateutil": "4.0.0",
+    "pytz": "2026.6",
+    "scikit-learn": "1.6.1",
+    "scipy": "1.14.1",
+    "threadpoolctl": "3.8.0",
+    "tzdata": "2026.6"
+  },
+  "data_sha256": {
+    "data/video_trending_events_24h_model.parquet": "8968941d1ac23bdc2df00ae3cd90621ba714331c217ea5057501e5efb90dbb76",
+    "data/video_trending_events_analysis.parquet": "cb9a13ea1c4d60ffe72046c6c23f9aed3ca846a2409ef5038b2a872eda8d164e",
+    "data/video_trending_events_T0_model.parquet": "b59a96a813a71b4c682dd30677a1ac3bb6f191abf66bfafb0986a967a0effa24",
+    "data/view_growth_KR.parquet": "c74dffb3d083442586940970feba48ef1a26be1c418d2846b9dd72f4573c620b"
+  },
+  "source_sha256": {
+    "src/trendit_lab/__init__.py": "bd71ebac4e6a04c8c51dc17bba70b05daf37ab81064e69a14ed8184f88e125b2",
+    "src/trendit_lab/data.py": "171343b0e888b364e79949587ff131625a31f4293efe3fe3c31ba3f685458662",
+    "src/trendit_lab/experiment.py": "d4b148f26cf2f73469efc143da174a99149258d716a0ef30aac4d5feaa84e34f",
+    "src/trendit_lab/model.py": "3e2c1906b42ba3b09f53e9761b8554798c334a7ee1442e3f247698dd3963b773",
+    "src/trendit_lab/split.py": "7d836c7229ad75697790f9cfe84b86ab219274c066d0a3a01e37e09d276cdcf5",
+    "experiments/run_baseline.py": "8ff604412b103b777169593ef902df9863a1056dc8308afb6fcd5da063189e8a",
+    "tests/test_data.py": "9709abac4cfa21ad41a181fb3babecadeba8769dc58654677910955d6222f4c4",
+    "tests/test_model.py": "4bc2ff7c673e0f31af5b45cc973c4fadbadc1e1b2fdeeba8f96af1318cc4633a",
+    "tests/test_split.py": "904d1b40044383d867d16fb34df6c88b3d5053eac87eefb632d9d38cd54c5257",
+    "requirements.txt": "bd50ee4536575d427224547fcae07574bd7f01f8918c20fab855520a78458119",
+    "requirements-lock.txt": "c755dde028431665e3dff9987fe7ac4d2e0a7211b705e5c50db68f8d08f9eebe",
+    "pyproject.toml": "1c3300a0ded86b8672e3b1cbff43e0407fd364e3e555811af49859d4c73d41eb",
+    ".python-version": "40411dc2c2726b4c7024d38318dd8df45c528b49491efb45939dd4a829847d94"
+  },
+  "config_sha256": "ad91f9ab2c6113bf3db883eacda6f813fd36a0ecb2e98cf1a600a5217772dafd",
+  "config": {
+    "seed": 42,
+    "validation_start": "2024-01-01 00:00:00",
+    "test_start": "2025-01-01 00:00:00",
+    "label_horizon_hours": 48,
+    "observation_buffer_hours": 6,
+    "threshold": 0.5,
+    "selection_metric": "balanced_accuracy",
+    "numeric_features": [
+      "entry_rank_log",
+      "T0_view_log",
+      "T0_comment_log",
+      "T0_engagement_ratio_log",
+      "latency_to_trend_log",
+      "pretrend_view_velocity_log",
+      "published_weekday",
+      "hour_sin",
+      "hour_cos",
+      "saturation_index_30d_mean_prev"
+    ],
+    "categorical_features": [
+      "category_group"
+    ],
+    "logistic": {
+      "C": 1.0,
+      "max_iter": 2000
+    },
+    "forest": {
+      "n_estimators": 200,
+      "max_depth": 10,
+      "min_samples_leaf": 20,
+      "n_jobs": 1
+    }
+  }
+}

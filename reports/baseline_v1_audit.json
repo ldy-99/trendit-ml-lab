@@ -1,0 +1,71 @@
+{
+  "files": {
+    "video_trending_events_24h_model.parquet": {
+      "rows": 27234,
+      "columns": 26,
+      "duplicate_keys": 0,
+      "missing": {}
+    },
+    "video_trending_events_analysis.parquet": {
+      "rows": 34964,
+      "columns": 64,
+      "duplicate_keys": 0,
+      "missing": {
+        "view_growth_24h": 7730,
+        "view_growth_24h_log": 7730,
+        "rolling_30d_mean_prev": 236,
+        "view_growth_24h_wins_eda": 7730
+      }
+    },
+    "video_trending_events_T0_model.parquet": {
+      "rows": 34964,
+      "columns": 25,
+      "duplicate_keys": 0,
+      "missing": {}
+    },
+    "view_growth_KR.parquet": {
+      "rows": 34964,
+      "columns": 9,
+      "duplicate_keys": 0,
+      "missing": {
+        "view_growth_24h": 7730,
+        "view_growth_24h_log": 7730
+      }
+    }
+  },
+  "observation_start": "2022-07-01 09:00:00",
+  "observation_end": "2025-07-01 03:00:00",
+  "exclusion_counts": {
+    "initial_snapshot": 200,
+    "video_seen_in_earlier_period": 159,
+    "insufficient_followup": 150
+  },
+  "splits": {
+    "train": {
+      "rows": 18628,
+      "videos": 9781,
+      "positive_rate": 0.666738243504402,
+      "start": "2022-07-01 15:00:00",
+      "end": "2023-12-29 15:00:00"
+    },
+    "validation": {
+      "rows": 10528,
+      "videos": 5408,
+      "positive_rate": 0.6860752279635258,
+      "start": "2024-01-01 09:00:00",
+      "end": "2024-12-29 15:00:00"
+    },
+    "test": {
+      "rows": 5299,
+      "videos": 2484,
+      "positive_rate": 0.6788073221362522,
+      "start": "2025-01-01 03:00:00",
+      "end": "2025-06-28 15:00:00"
+    }
+  },
+  "between_split_video_overlap": 0,
+  "initial_snapshot_rows": 200,
+  "last_snapshot_rows": 200,
+  "single_snapshot_rows": 2586,
+  "full_data_q75_hours": 240.0
+}

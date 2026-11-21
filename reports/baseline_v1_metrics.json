@@ -1,0 +1,113 @@
+{
+  "validation": {
+    "dummy": {
+      "accuracy": 0.6860752279635258,
+      "balanced_accuracy": 0.5,
+      "precision": 0.6860752279635258,
+      "recall": 1.0,
+      "f1": 0.8138133062926033,
+      "roc_auc": 0.5,
+      "average_precision": 0.6860752279635258,
+      "log_loss": 0.6230549385301373,
+      "brier_score": 0.21574992850629424,
+      "confusion_matrix": [
+        [
+          0,
+          3305
+        ],
+        [
+          0,
+          7223
+        ]
+      ]
+    },
+    "logistic": {
+      "accuracy": 0.7096314589665653,
+      "balanced_accuracy": 0.5607426310682194,
+      "precision": 0.7144327774346304,
+      "recall": 0.9608196040426416,
+      "f1": 0.8195075869398358,
+      "roc_auc": 0.7141381655465615,
+      "average_precision": 0.8374863537583824,
+      "log_loss": 0.5615818607578542,
+      "brier_score": 0.19052359668973626,
+      "confusion_matrix": [
+        [
+          531,
+          2774
+        ],
+        [
+          283,
+          6940
+        ]
+      ]
+    },
+    "random_forest": {
+      "accuracy": 0.8359612462006079,
+      "balanced_accuracy": 0.7745905613748986,
+      "precision": 0.8402674591381872,
+      "recall": 0.939498823203655,
+      "f1": 0.887116805019936,
+      "roc_auc": 0.8838465039503369,
+      "average_precision": 0.9324968311499418,
+      "log_loss": 0.3916275030890706,
+      "brier_score": 0.12179195154126762,
+      "confusion_matrix": [
+        [
+          2015,
+          1290
+        ],
+        [
+          437,
+          6786
+        ]
+      ]
+    }
+  },
+  "test": {
+    "dummy": {
+      "accuracy": 0.6788073221362522,
+      "balanced_accuracy": 0.5,
+      "precision": 0.6788073221362522,
+      "recall": 1.0,
+      "f1": 0.8086780575539568,
+      "roc_auc": 0.5,
+      "average_precision": 0.6788073221362522,
+      "log_loss": 0.6280950080503056,
+      "brier_score": 0.21817360420948437,
+      "confusion_matrix": [
+        [
+          0,
+          1702
+        ],
+        [
+          0,
+          3597
+        ]
+      ]
+    },
+    "random_forest": {
+      "accuracy": 0.8314776372900547,
+      "balanced_accuracy": 0.7718651494080293,
+      "precision": 0.83399209486166,
+      "recall": 0.9385599110369752,
+      "f1": 0.8831916285153695,
+      "roc_auc": 0.8782364334817465,
+      "average_precision": 0.9244173092179904,
+      "log_loss": 0.3937914674284213,
+      "brier_score": 0.12270958667430525,
+      "confusion_matrix": [
+        [
+          1030,
+          672
+        ],
+        [
+          221,
+          3376
+        ]
+      ]
+    }
+  },
+  "selected_model": "random_forest",
+  "threshold": 0.5
+}

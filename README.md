@@ -74,5 +74,12 @@ macOS/Linux에서는 `.venv/Scripts/python.exe` 대신 `.venv/bin/python`을 사
 | `reports/` | 검토용 결과와 실행 기록 |
 | `fundamentals/` | 프로젝트 실험과 구분한 기초 학습 자료 |
 
-다음 단계는 24시간 관측이 가능한 **같은 이벤트 집합**에서 T0 피처와 24h 피처를 비교하는 것입니다.
-현재 시험 점수를 보고 바꾸는 실험은 탐색으로 표시하고, 확증에는 별도의 미래 기간을 확보해야 합니다.
+## 24시간 조회수 증가량 비교
+
+두 랜덤포레스트를 정확히 24시간 후 조회수가 관측된 **같은 이벤트**로 학습하고 평가합니다. 한 모델에만 첫 24시간 조회수 증가량을 추가합니다. [24시간 입력 비교 결과](reports/t0_vs_24h_v1.md)
+
+```powershell
+.\.venv\Scripts\python.exe experiments/run_comparison_24h.py
+```
+
+비교 결과는 `reports/runs/comparison_24h_<실행 UTC>/`에 저장됩니다. 2025년 시험 기간을 재사용한 탐색 결과이며, 새로운 기간에 적용할 성능은 별도로 확인해야 합니다.

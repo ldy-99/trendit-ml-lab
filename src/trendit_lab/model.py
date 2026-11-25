@@ -13,23 +13,38 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from .data import validate_features
 
+GROWTH_24H = "view_growth_24h_log"
+
+
+def _pipeline(estimator, numeric, categorical):
+    prep = ColumnTransformer([
+        ("numeric", StandardScaler(), numeric),
+        ("category", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical),
+    ], remainder="drop")
+    return Pipeline([("preprocess", prep), ("model", estimator)])
+
+
+def build_forest(config, *, include_24h_growth=False):
+    numeric, categorical = config["numeric_features"], config["categorical_features"]
+    validate_features(numeric, categorical)
+    # The T0 allowlist stays in force. Only the explicit 24h arm adds this feature.
+    if include_24h_growth:
+        numeric = [*numeric, GROWTH_24H]
+    forest = RandomForestClassifier(**config["forest"], random_state=config["seed"])
+    return _pipeline(forest, numeric, categorical)
+
 
 def build_models(config):
     numeric, categorical = config["numeric_features"], config["categorical_features"]
     validate_features(numeric, categorical)
 
-    def pipeline(estimator):
-        prep = ColumnTransformer([
-            ("numeric", StandardScaler(), numeric),
-            ("category", OneHotEncoder(handle_unknown="ignore", sparse_output=False), categorical),
-        ], remainder="drop")
-        return Pipeline([("preprocess", prep), ("model", estimator)])
-
     # 순서가 동률 처리 규칙이다. Dummy도 후보에 포함해 개선이 없으면 그대로 선택한다.
     return {
-        "dummy": pipeline(DummyClassifier(strategy="prior", random_state=config["seed"])),
-        "logistic": pipeline(LogisticRegression(**config["logistic"], random_state=config["seed"])),
-        "random_forest": pipeline(RandomForestClassifier(**config["forest"], random_state=config["seed"])),
+        "dummy": _pipeline(DummyClassifier(strategy="prior", random_state=config["seed"]),
+                           numeric, categorical),
+        "logistic": _pipeline(LogisticRegression(**config["logistic"], random_state=config["seed"]),
+                              numeric, categorical),
+        "random_forest": build_forest(config),
     }
 
 

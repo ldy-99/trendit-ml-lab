@@ -1,9 +1,11 @@
 from pathlib import Path
+import tomllib
 
 import numpy as np
 import pandas as pd
 import pytest
 
+from trendit_lab.compare_24h import select_comparison_rows
 from trendit_lab.data import (CATEGORICAL_FEATURES, NUMERIC_FEATURES, load_events,
                               prior_saturation, validate_events, validate_features)
 
@@ -18,6 +20,15 @@ def events():
 def test_current_data_contract(events):
     assert len(events) > 0
     assert not events.duplicated(["video_id", "event_id"]).any()
+
+
+def test_comparison_rejects_late_snapshot_marked_exact(events):
+    config = tomllib.loads((ROOT / "configs/baseline.toml").read_text(encoding="utf-8"))
+    frame = events.copy()
+    exact_event = frame.index[frame.has_exact_24h_snapshot][0]
+    frame.loc[exact_event, "actual_time_at_24h"] += pd.Timedelta(hours=6)
+    with pytest.raises(ValueError, match="snapshot timestamp mismatch"):
+        select_comparison_rows(frame, config)
 
 
 @pytest.mark.parametrize("column", ["T_end", "trending_duration_h", "tdi_label", "video_id", "view_growth_24h_log"])

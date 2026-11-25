@@ -32,6 +32,21 @@ def git_info(root):
     return {"commit": read("rev-parse", "HEAD"), "status": read("status", "--porcelain")}
 
 
+def build_manifest(root, config_path, config):
+    tracked_inputs = sorted((root / "data").glob("*.parquet"))
+    sources = sorted((root / "src").rglob("*.py")) + sorted((root / "experiments").glob("*.py"))
+    sources += sorted((root / "tests").glob("*.py"))
+    sources += [root / p for p in ["requirements.txt", "requirements-lock.txt", "pyproject.toml", ".python-version"]]
+    return {
+        "created_at_utc": datetime.now(timezone.utc).isoformat(), "python": platform.python_version(),
+        "platform": platform.platform(), "git": git_info(root),
+        "packages": {d.metadata["Name"]: d.version for d in importlib.metadata.distributions()},
+        "data_sha256": {p.relative_to(root).as_posix(): sha256(p) for p in tracked_inputs},
+        "source_sha256": {p.relative_to(root).as_posix(): sha256(p) for p in sources},
+        "config_sha256": sha256(config_path), "config": config,
+    }
+
+
 def render_report(metrics, audit, manifest):
     lines = [
         "# T0에서 48시간 이상 지속 여부 예측: 첫 기준 실험", "",
@@ -133,18 +148,7 @@ def run(root: Path, config_path: Path, output: Path):
         "single_snapshot_rows": int(events.trending_duration_h_raw.eq(0).sum()),
         "full_data_q75_hours": float(events.trending_duration_h.quantile(.75)),
     }
-    tracked_inputs = sorted((root / "data").glob("*.parquet"))
-    sources = sorted((root / "src").rglob("*.py")) + sorted((root / "experiments").glob("*.py"))
-    sources += sorted((root / "tests").glob("*.py"))
-    sources += [root / p for p in ["requirements.txt", "requirements-lock.txt", "pyproject.toml", ".python-version"]]
-    manifest = {
-        "created_at_utc": datetime.now(timezone.utc).isoformat(), "python": platform.python_version(),
-        "platform": platform.platform(), "git": git_info(root),
-        "packages": {d.metadata["Name"]: d.version for d in importlib.metadata.distributions()},
-        "data_sha256": {p.relative_to(root).as_posix(): sha256(p) for p in tracked_inputs},
-        "source_sha256": {p.relative_to(root).as_posix(): sha256(p) for p in sources},
-        "config_sha256": sha256(config_path), "config": config,
-    }
+    manifest = build_manifest(root, config_path, config)
     output.mkdir(parents=True)
     (output / "config.toml").write_bytes(config_path.read_bytes())
     write_json(output / "metrics.json", metrics)
